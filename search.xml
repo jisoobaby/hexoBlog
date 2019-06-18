@@ -3,7 +3,14 @@
   <entry>
     <title><![CDATA[Git与Github的连接与使用]]></title>
     <url>%2Fblog%2F2019%2F06%2F18%2FGit%E4%B8%8EGithub%E7%9A%84%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BD%BF%E7%94%A8%2F</url>
-    <content type="text"><![CDATA[Git与Github的连接与使用下面继续，使用git 将项目上传到GitHub上 首先要有GitHub账号,这就不用说了，没有的先注册，地址：https://github.com 没有仓库的话，先新创建一个仓库 填写新仓库名称，备注信息。点击创建即可完成。 创建完成会显示如下界面。先放置不用管。后面会用到 因为本地Git仓库和GitHub仓库之间的传输是通过SSH加密传输的，GitHub需要识别是否是你推送，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送，所以需要配置ssh key。 1.创建SSH Key。 在用户主目录（C:\Users\Administrator）下，看看有没有.ssh文件，如果有，再看文件下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接到下一步。如果没有，打开Git Bash，输入命令，创建SSH Key 直接回车就哦了 出现上图，就说创建成功啦，再去用户主目录里找到.ssh文件夹，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露，id_rsa.pub是公钥，可以公开。 2.接下来到GitHub上，打开“Account settings”–“SSH Keys”页面，然后点击“Add SSH Key”，填上Title（随意写），在Key文本框里粘贴 id_rsa.pub文件里的全部内容。 点“Add Key”，你就应该看到已经添加的Key，可以添加多个Key 3.验证是否成功，在git bash里输入下面的命令 如果初次设置的话，会出现如下界面，输入yes 同意即可 4.下面开始设置username和email，因为github每次commit都会记录他们 5.接下来就是把本地仓库传到github上去，之前在GitHub上建好一个新的仓库是，跳转的页面，完全按照上面的只是操作就可以了。]]></content>
+    <content type="text"><![CDATA[下面继续，使用git 将项目上传到GitHub上 首先要有GitHub账号,这就不用说了，没有的先注册，地址：https://github.com 没有仓库的话，先新创建一个仓库 ## 填写新仓库名称，备注信息。点击创建即可完成。 创建完成会显示如下界面。先放置不用管。后面会用到 因为本地Git仓库和GitHub仓库之间的传输是通过SSH加密传输的，GitHub需要识别是否是你推送，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送，所以需要配置ssh key。 1.创建SSH Key。 在用户主目录（C:\Users\Administrator）下，看看有没有.ssh文件，如果有，再看文件下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接到下一步。如果没有，打开Git Bash，输入命令，创建SSH Key 直接回车就哦了 出现上图，就说创建成功啦，再去用户主目录里找到.ssh文件夹，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露，id_rsa.pub是公钥，可以公开。 2.接下来到GitHub上，打开“Account settings”–“SSH Keys”页面，然后点击“Add SSH Key”，填上Title（随意写），在Key文本框里粘贴 id_rsa.pub文件里的全部内容。 点“Add Key”，你就应该看到已经添加的Key，可以添加多个Key 3.验证是否成功，在git bash里输入下面的命令 如果初次设置的话，会出现如下界面，输入yes 同意即可 4.下面开始设置username和email，因为github每次commit都会记录他们 5.接下来就是把本地仓库传到github上去，之前在GitHub上建好一个新的仓库是，跳转的页面，完全按照上面的只是操作就可以了。]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>Github</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Gambit建模中split的用法]]></title>
@@ -18,20 +25,18 @@
         <category>Hexo</category>
       </categories>
       <tags>
-        <tag>PS3</tag>
-        <tag>Games</tag>
-        <tag>Hexo</tag>
         <tag>Github</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[My first hexo]]></title>
-    <url>%2Fblog%2F2019%2F05%2F07%2FMy-first-hexo%20-%20%E5%89%AF%E6%9C%AC%2F</url>
+    <url>%2Fblog%2F2019%2F05%2F07%2FMy-first-hexo%20-%20%E5%89%AF%E6%9C%AC%20-%20%E5%89%AF%E6%9C%AC%2F</url>
     <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[My first hexo]]></title>
-    <url>%2Fblog%2F2019%2F05%2F07%2FMy-first-hexo%20-%20%E5%89%AF%E6%9C%AC%20-%20%E5%89%AF%E6%9C%AC%2F</url>
+    <url>%2Fblog%2F2019%2F05%2F07%2FMy-first-hexo%20-%20%E5%89%AF%E6%9C%AC%2F</url>
     <content type="text"></content>
   </entry>
   <entry>

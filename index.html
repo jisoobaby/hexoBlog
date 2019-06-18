@@ -336,6 +336,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -375,32 +397,15 @@
 
       
         
-          
-            <h1 id="Git与Github的连接与使用"><a href="#Git与Github的连接与使用" class="headerlink" title="Git与Github的连接与使用"></a><a href="https://www.cnblogs.com/flora5/p/7152556.html" target="_blank" rel="noopener">Git与Github的连接与使用</a></h1><p>下面继续，使用git 将项目上传到GitHub上</p>
+          <p>下面继续，使用git 将项目上传到GitHub上</p>
 <p>首先要有GitHub账号,这就不用说了，没有的先注册，地址：<a href="https://github.com/" target="_blank" rel="noopener">https://github.com</a> </p>
-<p>没有仓库的话，先新创建一个仓库</p>
-<p><img src="https://images2015.cnblogs.com/blog/1192146/201707/1192146-20170711180300993-19531117.png" alt="img"></p>
-<p>填写新仓库名称，备注信息。点击创建即可完成。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1192146/201707/1192146-20170711180434525-1461384261.png" alt="img"></p>
-<p>创建完成会显示如下界面。先放置不用管。后面会用到</p>
-<p><img src="https://images2015.cnblogs.com/blog/1192146/201707/1192146-20170711180601197-948815634.jpg" alt="img"></p>
-<p>因为本地Git仓库和GitHub仓库之间的传输是通过SSH加密传输的，GitHub需要识别是否是你推送，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送，所以需要配置ssh key。</p>
-<p>1.创建SSH Key。</p>
-<p>在用户主目录（C:\Users\Administrator）下，看看有没有.ssh文件，如果有，再看文件下有没有<code>id_rsa</code>和<code>id_rsa.pub</code>这两个文件，如果已经有了，可直接到下一步。如果没有，打开Git Bash，输入命令，创建SSH Key</p>
-<p>直接回车就哦了</p>
-<p><img src="https://images2015.cnblogs.com/blog/1192146/201707/1192146-20170714173049337-699715656.png" alt="img"></p>
-<p>出现上图，就说创建成功啦，再去用户主目录里找到<code>.ssh</code>文件夹，里面有<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，这两个就是SSH Key的秘钥对，<code>id_rsa</code>是私钥，不能泄露，<code>id_rsa.pub</code>是公钥，可以公开。</p>
-<p>2.接下来到GitHub上，打开“Account settings”–“SSH Keys”页面，然后点击“Add SSH Key”，填上Title（随意写），在Key文本框里粘贴 <code>id_rsa.pub</code>文件里的全部内容。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1192146/201707/1192146-20170714173851775-474031887.png" alt="img"></p>
-<p>点“Add Key”，你就应该看到已经添加的Key，可以添加多个Key</p>
-<p><img src="https://images2015.cnblogs.com/blog/1192146/201707/1192146-20170714174315025-1450935601.png" alt="img"></p>
-<p>3.验证是否成功，在git bash里输入下面的命令</p>
-<p>如果初次设置的话，会出现如下界面，输入yes 同意即可</p>
-<p><img src="https://images2015.cnblogs.com/blog/1192146/201707/1192146-20170714175422400-33988795.png" alt="img"></p>
-<p>4.下面开始设置username和email，因为github每次commit都会记录他们</p>
-<p>5.接下来就是把本地仓库传到github上去，之前在GitHub上建好一个新的仓库是，跳转的页面，完全按照上面的只是操作就可以了。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2019/06/18/Git与Github的连接与使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -791,7 +796,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -802,7 +807,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index-1.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
