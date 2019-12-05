@@ -79,17 +79,14 @@
 
 
 
-<meta name="description" content="我就是我，一只小小鸟">
 <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
+<meta property="og:title" content="Tags">
 <meta property="og:url" content="https://wind-y.gitee.io/blog/tags/index.html">
 <meta property="og:site_name" content="不一样的烟火">
-<meta property="og:description" content="我就是我，一只小小鸟">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-09T07:51:33.530Z">
+<meta property="og:updated_time" content="2019-06-19T06:04:25.014Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="我就是我，一只小小鸟">
+<meta name="twitter:title" content="Tags">
 
 
 
@@ -125,7 +122,7 @@
 
 
 
-  <title>tags | 不一样的烟火</title>
+  <title>Tags | 不一样的烟火</title>
   
 
 
@@ -262,12 +259,14 @@
     </div>
   
 
+  
 
-  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="450" src="//music.163.com/outchain/player?type=0&id=2521713081&auto=1&height=430"></iframe>
+
 
 
 
 </nav>
+
 
 
 
@@ -287,9 +286,8 @@
     <div class="post-block page">
       <header class="post-header">
 
-  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="450" src="//music.163.com/outchain/player?type=0&id=988690134&auto=1&height=430"></iframe>
 
-	<h1 class="post-title" itemprop="name headline">tags</h1>
+	<h1 class="post-title" itemprop="name headline">Tags</h1>
 
 
 
@@ -301,7 +299,14 @@
       <div class="post-body">
         
         
-          
+          <div class="tag-cloud">
+            <div class="tag-cloud-title">
+                目前共计 5 个标签
+            </div>
+            <div class="tag-cloud-tags">
+              <a href="/blog/tags/Git/" style="font-size: 12px; color: #ccc">Git</a> <a href="/blog/tags/Github/" style="font-size: 30px; color: #111">Github</a> <a href="/blog/tags/Hexo/" style="font-size: 12px; color: #ccc">Hexo</a> <a href="/blog/tags/hexo/" style="font-size: 12px; color: #ccc">hexo</a> <a href="/blog/tags/music/" style="font-size: 12px; color: #ccc">music</a>
+            </div>
+          </div>
         
       </div>
       
@@ -319,15 +324,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDcxMC8yMTIzNQ=="></div>
-    </div>
-
-  
-
-
 
         </div>
         
@@ -366,7 +362,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -387,8 +383,8 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/blog/tags/index-1.html">
-                  <span class="site-state-item-count">3</span>
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -494,14 +490,24 @@
     
     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas>
     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
-    <script type="text/javascript" src="js/src/fireworks.js"></script>
+    <script type="text/javascript" src="/blog/js/src/fireworks.js"></script>
     
 
-    <!-- 在线播放器 -->
-    <link rel="stylesheet" href="dist/APlayer.min.css">
+    <!-- 在线播放器 
+    <link rel="stylesheet" href="/blog/dist/APlayer.min.css">
     <div id="aplayer"></div>
-    <script type="text/javascript" src="dist/APlayer.min.js"></script>
-    <script type="text/javascript" src="dist/music.js"></script>
+    <script type="text/javascript" src="/blog/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="/blog/dist/music.js"></script>
+    -->
+    
+    <!-- 视频播放器  -->
+
+    <link rel="stylesheet" href="/blog/dist/DPlayer.min.css">
+    <div id="dplayer"></div>
+    <script type="text/javascript" src="/blog/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/blog/dist/music2.js"></script>
+   
+    
 
   </div>
 
@@ -617,17 +623,6 @@
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 
@@ -1100,7 +1095,10 @@
   
 
 
-  <script type="text/javascript" src="js/src/dynamic_bg.js"></script>
+  <script type="text/javascript" src="/blog/js/src/dynamic_bg.js"></script>
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/blog/js/src/clicklove.js"></script>
 
 </body>
 </html>
