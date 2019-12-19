@@ -17,9 +17,14 @@
         <category>Git</category>
       </categories>
       <tags>
-        <tag>Github</tag>
         <tag>Git</tag>
+        <tag>Github</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Gambit建模中split的用法]]></title>
+    <url>%2FhexoBlog%2F2019%2F05%2F07%2FGambit%E5%BB%BA%E6%A8%A1%E4%B8%ADsplit%E7%9A%84%E7%94%A8%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[在Gambit建模中会遇到一些凹槽等结构，需要两个规则结构进行split的，但是利用Split时，到底哪部分切割哪部分呢？剩余部分是否保存呢？ 在这里，用例子来解释上面的问题。 Volume选择的是主体Volume1（或者面），Split With即选择用哪个面或者体来切割上面的Volume1； 若选择Retain，则保留Split With所采用的面或者体，如果实际操作中，发现保存多余了，可以选择撤销，就是Gambit右下角的箭头按钮，或者是选择操作中的删除命令，路径Volume-&gt;Delete Volumes（三维举例）。 采用小体积或者小平面切割大的，和用大的切割小的效果是不同的，通过下图示例大家意会吧。 上图中，大的体为A，小的为B作者：xiaoai_liang来源：CSDN原文：https://blog.csdn.net/xiaoai_liang/article/details/54093133版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
   </entry>
   <entry>
     <title><![CDATA[Hexo-Github搭建博客]]></title>
@@ -29,8 +34,8 @@
         <category>Hexo</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>Github</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -40,18 +45,13 @@
   </entry>
   <entry>
     <title><![CDATA[My first hexo]]></title>
-    <url>%2FhexoBlog%2F2019%2F05%2F07%2FMy-first-hexo%2F</url>
-    <content type="text"><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[My first hexo]]></title>
     <url>%2FhexoBlog%2F2019%2F05%2F07%2FMy-first-hexo%20-%20%E5%89%AF%E6%9C%AC%2F</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
   <entry>
-    <title><![CDATA[Gambit建模中split的用法]]></title>
-    <url>%2FhexoBlog%2F2019%2F05%2F07%2FGambit%E5%BB%BA%E6%A8%A1%E4%B8%ADsplit%E7%9A%84%E7%94%A8%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[在Gambit建模中会遇到一些凹槽等结构，需要两个规则结构进行split的，但是利用Split时，到底哪部分切割哪部分呢？剩余部分是否保存呢？ 在这里，用例子来解释上面的问题。 Volume选择的是主体Volume1（或者面），Split With即选择用哪个面或者体来切割上面的Volume1； 若选择Retain，则保留Split With所采用的面或者体，如果实际操作中，发现保存多余了，可以选择撤销，就是Gambit右下角的箭头按钮，或者是选择操作中的删除命令，路径Volume-&gt;Delete Volumes（三维举例）。 采用小体积或者小平面切割大的，和用大的切割小的效果是不同的，通过下图示例大家意会吧。 上图中，大的体为A，小的为B作者：xiaoai_liang来源：CSDN原文：https://blog.csdn.net/xiaoai_liang/article/details/54093133版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
+    <title><![CDATA[My first hexo]]></title>
+    <url>%2FhexoBlog%2F2019%2F05%2F07%2FMy-first-hexo%2F</url>
+    <content type="text"><![CDATA[]]></content>
   </entry>
   <entry>
     <title><![CDATA[修复官方Dplayer-Typecho插件不能连接弹幕API后端的方法]]></title>
