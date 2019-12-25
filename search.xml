@@ -36,6 +36,11 @@
     <content type="text"><![CDATA[在Gambit建模中会遇到一些凹槽等结构，需要两个规则结构进行split的，但是利用Split时，到底哪部分切割哪部分呢？剩余部分是否保存呢？ 在这里，用例子来解释上面的问题。 Volume选择的是主体Volume1（或者面），Split With即选择用哪个面或者体来切割上面的Volume1； 若选择Retain，则保留Split With所采用的面或者体，如果实际操作中，发现保存多余了，可以选择撤销，就是Gambit右下角的箭头按钮，或者是选择操作中的删除命令，路径Volume-&gt;Delete Volumes（三维举例）。 采用小体积或者小平面切割大的，和用大的切割小的效果是不同的，通过下图示例大家意会吧。 上图中，大的体为A，小的为B 原文：https://blog.csdn.net/xiaoai_liang/article/details/54093133]]></content>
   </entry>
   <entry>
+    <title><![CDATA[My first hexo]]></title>
+    <url>%2FhexoBlog%2F2019%2F05%2F07%2FMy-first-hexo%2F</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo-Github搭建博客]]></title>
     <url>%2FhexoBlog%2F2019%2F05%2F07%2FHexo-Github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%2F</url>
     <content type="text"><![CDATA[大家也搭建过博客，很多时候，按着教程来做就可以了，但是我当时为了搭建Hexo博客并部署到Github，走了不少弯路。现在终于搭建出来了，为了帮助大家，我决定写一篇“史上最详细“截图”搭建Hexo博客并部署到Github”。 ###工具/原料 Windows（Mac也是差不多，可参照）GitNode.js 安装Hexo利用 npm 命令即可安装。在任意位置点击鼠标右键，选择Git Base。 输入命令： npm install -g hexo 注意：-g是指全局安装hexo。 ####创建Hexo文件夹 安装完成后，在你喜爱的文件夹下（如C:\Hexo），执行以下指令(在C:\Hexo内点击鼠标右键，选择Git Bash)，Hexo 即会自动在目标文件夹建立网站所需要的所有文件。 hexo init 安装依赖包npm install 本地查看现在我们已经搭建起本地的hexo博客了，执行以下命令(在C:\Hexo)，然后到浏览器输入localhost:4000看看。 hexo generate hexo server ###注册Github账号 这里不演示了。 创建Repository创建的时候注意Repository的名字。比如我的Github账号是jisoobaby，那么我应该创建的Repository的名字是：jisoobaby.github.io。 修改配置文件到你刚刚创建的Repository下，找到以下内容： 先点击HTTPS，然后复制里面的地址。然后编辑_config.yml文件（在C:\Hexo下）。 修改文件里面的deploy。其中的repository就改成你刚刚复制的地址。保存这个文件。 设置SSH keys在Git Bash输入以下指令（任意位置点击鼠标右键），检查是否已经存在了SSH keys。 ls -al ~/.ssh 如果不存在就没有关系，如果存在的话，直接删除.ssh文件夹里面所有文件： 输入以下指令（邮箱就是你注册Github时候的邮箱）后，回车： ssh-keygen -t rsa -C “angelen10@163.com“ 然后它会提示要你输入passphrase（如上图，我没有输入直接回车，如果你输入的话，要记得，到时候会用到）。之后，如果出现类似下图： 然后键入以下指令： ssh-agent -s 继续输入指令： ssh-add ~/.ssh/id_rsa 输入之后，在我这里是出错了，不知道你的有没有出错。 如果你的也是这样子出错了的话，就输入以下指令： eval ssh-agent -s ssh-add 到了这一步，就可以添加SSH key到你的Github账户了。键入以下指令，拷贝Key（先拷贝了，等一下可以直接粘贴）： clip &lt; ~/.ssh/id_rsa.pub 然后到Github里面，点击右上角的设置图标： 在Settings sidebar那里，点击SSH keys： 点击Add SSH key： 输入Title，作为这个key的描述吧（你可以输入Personal MacBook Air，瞬间高大上） 然后这个Key就是刚刚拷贝的，你直接粘贴就好（也可以文本打开以下文件）： 点击Add Key： 输入你的Github密码即可完成SSH Key的添加。嗯，最后还是测试一下吧，键入以下命令： ssh -T git@github.com 你可能会看到有警告，没事，输入“yes”就好。 完成部署最后一步，快要成功了，键入指令： hexo generate hexo deploy OK，我们的博客就已经完全搭建起来了，在浏览器输入（当然，是你的用户名）： http://jisoobaby.github.io/hexoBlog/ 注意：每次修改本地文件后，需要键入hexo generate才能保存。每次使用命令时，都要在C:\Hexo目录下。每次想要上传文件到Github时，就应该先键入hexo generate保存之后，再键入hexo deploy。大概成功之后是酱紫的： 对了，记住上图的Username是你的Github账号名称，而不是邮箱；Password就是你的Github的密码。 Tipshexo现在支持更加简单的命令格式了，比如： hexo g == hexo generate hexo d == hexo deploy hexo s == hexo server hexo n == hexo new 注意事项这篇和官方的说法有一点不一样，不过这是成功之谈。]]></content>
@@ -46,11 +51,6 @@
         <tag>Hexo</tag>
         <tag>Github</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[My first hexo]]></title>
-    <url>%2FhexoBlog%2F2019%2F05%2F07%2FMy-first-hexo%2F</url>
-    <content type="text"><![CDATA[]]></content>
   </entry>
   <entry>
     <title><![CDATA[修复官方Dplayer-Typecho插件不能连接弹幕API后端的方法]]></title>
