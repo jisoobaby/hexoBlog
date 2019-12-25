@@ -376,9 +376,9 @@
 
       
         <h3 id="网易播放器"><a href="#网易播放器" class="headerlink" title="网易播放器"></a>网易播放器</h3> <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">330</span> <span class="attr">height</span>=<span class="string">450</span> <span class="attr">src</span>=<span class="string">"//music.163.com/outchain/player?type=0&amp;id=988690134&amp;auto=1&amp;height=430"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="aplayer-播放器"><a href="#aplayer-播放器" class="headerlink" title="aplayer 播放器"></a>aplayer 播放器</h3><p>在 Hexo 配置文件 _config.yml 中配置本插件：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  script_dir: some/place                        # Public 目录下脚本目录路径，默认: 'assets/js'</span><br><span class="line">  style_dir: some/place                         # Public 目录下样式目录路径，默认: 'assets/css'</span><br><span class="line">  cdn: http://xxx/aplayer.min.js                # 引用 APlayer.js 外部 CDN 地址 (默认不开启)</span><br><span class="line">  style_cdn: http://xxx/aplayer.min.css         # 引用 APlayer.css 外部 CDN 地址 (默认不开启)</span><br><span class="line">  meting: true                                  # MetingJS 支持</span><br><span class="line">  meting_api: http://xxx/api.php                # 自定义 Meting API 地址</span><br><span class="line">  meting_cdn: http://xxx/Meing.min.js           # 引用 Meting.js 外部 CDN 地址 (默认不开启)</span><br><span class="line">  asset_inject: true                            # 自动插入 Aplayer.js 与 Meting.js 资源脚本, 默认开启</span><br><span class="line">  externalLink: http://xxx/aplayer.min.js       # 老版本参数，功能与参数 cdn 相同</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">    &#123;</span><br><span class="line">        "narrow": false,                         </span><br><span class="line">        "autoplay": true,                         </span><br><span class="line">        "mode": "order",                        </span><br><span class="line">        "showlrc": 3,                             </span><br><span class="line">        "mutex": true,                           </span><br><span class="line">        "theme": "#e6d0b2",                      </span><br><span class="line">        "preload": "metadata",                   </span><br><span class="line">        "listmaxheight": "513px",                </span><br><span class="line">        "music": [</span><br><span class="line">            &#123;</span><br><span class="line">                "title": "红楼梦 - 葛冬梅",</span><br><span class="line">                "author": "葛冬梅",</span><br><span class="line">                "url": "http://www.ytmp3.cn/down/73693.mp3",</span><br><span class="line">                "pic": "http://img.ytmp3.cn/image/83.jpg",</span><br><span class="line"></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                "title": "出山 - 羽莲亭",</span><br><span class="line">                "author": "羽莲亭",</span><br><span class="line">                "url": "http://www.ytmp3.cn/down/73680.mp3",</span><br><span class="line">                "pic": "http://img.ytmp3.cn/image/31.jpg"</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure>
 
       
@@ -400,14 +400,14 @@
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/blog/images/wechatpay.jpg" alt="Jisoojun Yin 微信支付">
+        <img id="wechat_qr" src="/hexoBlog/images/wechatpay.jpg" alt="Jisoojun Yin 微信支付">
         <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/blog/images/alipay.jpg" alt="Jisoojun Yin 支付宝">
+        <img id="alipay_qr" src="/hexoBlog/images/alipay.jpg" alt="Jisoojun Yin 支付宝">
         <p>支付宝</p>
       </div>
     
@@ -450,6 +450,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoBlog/2019/09/27/云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】/" rel="prev" title="云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】">
+                云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -560,7 +564,7 @@
               
                 <a href="/hexoBlog/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -582,7 +586,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/hexoBlog/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -674,6 +678,12 @@
   <span class="post-meta-divider">|</span>
 
 
+<div class="BbeiAn-info">
+    京ICP备 -
+    <a target="_blank" href="http://www.beian.miit.gov.cn/" style="color:#f0d784" rel="nofollow">19050870</a> <!--a标签中增加nofollow属性，避免爬虫出站。-->|
+  <!-- <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=你自己的备案号" style="color:#f0d784;text-decoration:none;padding-left:30px;background:url(https://s1.ax1x.com/2018/09/29/ilmwIH.png) no-repeat left center" rel="nofollow">赣公网安备 你自己的备案号</a>    这里将图标作为了背景，以使得能和后面的文字在同一行-->
+</div>
+
 
   <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
@@ -704,24 +714,24 @@
     
     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas>
     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
-    <script type="text/javascript" src="/blog/js/src/fireworks.js"></script>
+    <script type="text/javascript" src="/hexoBlog/js/src/fireworks.js"></script>
     
 
-    <!-- 在线播放器 
+    <!-- 在线播放器
     <link rel="stylesheet" href="/blog/dist/APlayer.min.css">
     <div id="aplayer"></div>
     <script type="text/javascript" src="/blog/dist/APlayer.min.js"></script>
     <script type="text/javascript" src="/blog/dist/music.js"></script>
     -->
-    
+
     <!-- 视频播放器  -->
 
-    <link rel="stylesheet" href="/blog/dist/DPlayer.min.css">
+    <link rel="stylesheet" href="/hexoBlog/dist/DPlayer.min.css">
     <div id="dplayer"></div>
-    <script type="text/javascript" src="/blog/dist/DPlayer.min.js"></script>
-    <script type="text/javascript" src="/blog/dist/music2.js"></script>
-   
-    
+    <script type="text/javascript" src="/hexoBlog/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/hexoBlog/dist/music.js"></script>
+
+
 
   </div>
 
@@ -1320,10 +1330,10 @@
   
 
 
-  <script type="text/javascript" src="/blog/js/src/dynamic_bg.js"></script>
+  <script type="text/javascript" src="/hexoBlog/js/src/dynamic_bg.js"></script>
 
   <!-- 页面点击小红心 -->
-<script type="text/javascript" src="/blog/js/src/clicklove.js"></script>
+<script type="text/javascript" src="/hexoBlog/js/src/clicklove.js"></script>
 
 </body>
 </html>

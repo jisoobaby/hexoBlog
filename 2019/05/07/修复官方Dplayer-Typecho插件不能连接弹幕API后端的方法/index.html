@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="说明：博主之前发过DPlayer弹幕后端搭建教程→传送门，也说了下HTML代码的使用方法，不过对于Typecho博客来说，插件不能用会很麻烦，加上看见很多使用Typecho的同学对这个还是有点兴趣的，所以就咨询了下某大佬插件修复方法，貌似是播放器版本没更新到最新，然后在这里就说下，有需求的可以用下。 方法12官方插件地址：https://github.com/MoePlayer/DPlayer-T">
+<meta name="description" content="说明：博主之前发过DPlayer弹幕后端搭建教程→传送门，也说了下HTML代码的使用方法，不过对于Typecho博客来说，插件不能用会很麻烦，加上看见很多使用Typecho的同学对这个还是有点兴趣的，所以就咨询了下某大佬插件修复方法，貌似是播放器版本没更新到最新，然后在这里就说下，有需求的可以用下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="修复官方Dplayer-Typecho插件不能连接弹幕API后端的方法">
 <meta property="og:url" content="https://wind-y.gitee.io/blog/2019/05/07/修复官方Dplayer-Typecho插件不能连接弹幕API后端的方法/index.html">
 <meta property="og:site_name" content="不一样的烟火">
-<meta property="og:description" content="说明：博主之前发过DPlayer弹幕后端搭建教程→传送门，也说了下HTML代码的使用方法，不过对于Typecho博客来说，插件不能用会很麻烦，加上看见很多使用Typecho的同学对这个还是有点兴趣的，所以就咨询了下某大佬插件修复方法，貌似是播放器版本没更新到最新，然后在这里就说下，有需求的可以用下。 方法12官方插件地址：https://github.com/MoePlayer/DPlayer-T">
+<meta property="og:description" content="说明：博主之前发过DPlayer弹幕后端搭建教程→传送门，也说了下HTML代码的使用方法，不过对于Typecho博客来说，插件不能用会很麻烦，加上看见很多使用Typecho的同学对这个还是有点兴趣的，所以就咨询了下某大佬插件修复方法，貌似是播放器版本没更新到最新，然后在这里就说下，有需求的可以用下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-08T02:08:36.190Z">
+<meta property="og:updated_time" content="2019-12-25T06:34:40.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="修复官方Dplayer-Typecho插件不能连接弹幕API后端的方法">
-<meta name="twitter:description" content="说明：博主之前发过DPlayer弹幕后端搭建教程→传送门，也说了下HTML代码的使用方法，不过对于Typecho博客来说，插件不能用会很麻烦，加上看见很多使用Typecho的同学对这个还是有点兴趣的，所以就咨询了下某大佬插件修复方法，貌似是播放器版本没更新到最新，然后在这里就说下，有需求的可以用下。 方法12官方插件地址：https://github.com/MoePlayer/DPlayer-T">
+<meta name="twitter:description" content="说明：博主之前发过DPlayer弹幕后端搭建教程→传送门，也说了下HTML代码的使用方法，不过对于Typecho博客来说，插件不能用会很麻烦，加上看见很多使用Typecho的同学对这个还是有点兴趣的，所以就咨询了下某大佬插件修复方法，貌似是播放器版本没更新到最新，然后在这里就说下，有需求的可以用下。">
 
 
 
@@ -375,6 +375,7 @@
 
       
         <p><strong>说明：</strong>博主之前发过<code>DPlayer</code>弹幕后端搭建教程→<a href="https://www.moerats.com/archives/838/" target="_blank" rel="noopener">传送门</a>，也说了下<code>HTML</code>代码的使用方法，不过对于<code>Typecho</code>博客来说，插件不能用会很麻烦，加上看见很多使用<code>Typecho</code>的同学对这个还是有点兴趣的，所以就咨询了下某大佬插件修复方法，貌似是播放器版本没更新到最新，然后在这里就说下，有需求的可以用下。</p>
+<a id="more"></a>
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">官方插件地址：https://github.com/MoePlayer/DPlayer-Typecho</span><br><span class="line">修复后的地址：https://github.com/menhood/DPlayer-Typecho</span><br></pre></td></tr></table></figure>
 <p><strong>1、直接使用</strong><br>去提供修复后的<code>Github</code>地址下载插件，然后将文件夹名改为<code>DPlayer</code>上传到<code>usr/plugins</code>目录启用即可。</p>
 <p><strong>2、自行修复</strong><br>如果你不放心使用修复后的插件，那么你可以自行替换文件修复，修复方法如下：</p>
@@ -387,12 +388,7 @@
 <p>要是有时候不生效，可以对斜杠<code>/</code>转义一下，比如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(dplayer url=&quot;http:\/\/xxx.com\/xxx.mp4&quot; pic=&quot;http:\/\/xxx.com\/xxx.jpg&quot;/]</span><br></pre></td></tr></table></figure>
 <h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#这里直接用的B站一个视频，顺便把弹幕也给拉过来了，假装看的人很多吧。</span><br></pre></td></tr></table></figure>
-<p>00:00 / 06:47</p>
-<p>速度</p>
-<p>洗脑循环</p>
-<p>显示弹幕</p>
-<p>海量弹幕</p>
-<p>弹幕透明度</p>
+<p> 原文链接：<a href="https://www.moerats.com/archives/856/" target="_blank" rel="noopener">https://www.moerats.com/archives/856/</a></p>
 
       
     </div>
@@ -413,14 +409,14 @@
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/blog/images/wechatpay.jpg" alt="Jisoojun Yin 微信支付">
+        <img id="wechat_qr" src="/hexoBlog/images/wechatpay.jpg" alt="Jisoojun Yin 微信支付">
         <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/blog/images/alipay.jpg" alt="Jisoojun Yin 支付宝">
+        <img id="alipay_qr" src="/hexoBlog/images/alipay.jpg" alt="Jisoojun Yin 支付宝">
         <p>支付宝</p>
       </div>
     
@@ -569,7 +565,7 @@
               
                 <a href="/hexoBlog/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -591,7 +587,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/hexoBlog/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -683,6 +679,12 @@
   <span class="post-meta-divider">|</span>
 
 
+<div class="BbeiAn-info">
+    京ICP备 -
+    <a target="_blank" href="http://www.beian.miit.gov.cn/" style="color:#f0d784" rel="nofollow">19050870</a> <!--a标签中增加nofollow属性，避免爬虫出站。-->|
+  <!-- <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=你自己的备案号" style="color:#f0d784;text-decoration:none;padding-left:30px;background:url(https://s1.ax1x.com/2018/09/29/ilmwIH.png) no-repeat left center" rel="nofollow">赣公网安备 你自己的备案号</a>    这里将图标作为了背景，以使得能和后面的文字在同一行-->
+</div>
+
 
   <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
@@ -713,24 +715,24 @@
     
     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas>
     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
-    <script type="text/javascript" src="/blog/js/src/fireworks.js"></script>
+    <script type="text/javascript" src="/hexoBlog/js/src/fireworks.js"></script>
     
 
-    <!-- 在线播放器 
+    <!-- 在线播放器
     <link rel="stylesheet" href="/blog/dist/APlayer.min.css">
     <div id="aplayer"></div>
     <script type="text/javascript" src="/blog/dist/APlayer.min.js"></script>
     <script type="text/javascript" src="/blog/dist/music.js"></script>
     -->
-    
+
     <!-- 视频播放器  -->
 
-    <link rel="stylesheet" href="/blog/dist/DPlayer.min.css">
+    <link rel="stylesheet" href="/hexoBlog/dist/DPlayer.min.css">
     <div id="dplayer"></div>
-    <script type="text/javascript" src="/blog/dist/DPlayer.min.js"></script>
-    <script type="text/javascript" src="/blog/dist/music2.js"></script>
-   
-    
+    <script type="text/javascript" src="/hexoBlog/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/hexoBlog/dist/music.js"></script>
+
+
 
   </div>
 
@@ -1329,10 +1331,10 @@
   
 
 
-  <script type="text/javascript" src="/blog/js/src/dynamic_bg.js"></script>
+  <script type="text/javascript" src="/hexoBlog/js/src/dynamic_bg.js"></script>
 
   <!-- 页面点击小红心 -->
-<script type="text/javascript" src="/blog/js/src/clicklove.js"></script>
+<script type="text/javascript" src="/hexoBlog/js/src/clicklove.js"></script>
 
 </body>
 </html>

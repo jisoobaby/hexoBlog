@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/hexoBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexoBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexoBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexoBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexoBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/hexoBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CentOS7,Nginx,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言系统我选择了比较稳定的CentOS 7.3 64位。以下是一些关键参数信息：    操作系统 CPU 内存 带宽     CentOS 7.3 64位 1核 2GB 1Mbps    以下我将详细记录我这次云主机的配置过程，一来是熟悉一下CentOS系统，二来是试用云主机。相信这次经历会让我学到很多东西。">
+<meta name="keywords" content="CentOS7,Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】">
+<meta property="og:url" content="https://wind-y.gitee.io/blog/2019/09/27/云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】/index.html">
+<meta property="og:site_name" content="不一样的烟火">
+<meta property="og:description" content="前言系统我选择了比较稳定的CentOS 7.3 64位。以下是一些关键参数信息：    操作系统 CPU 内存 带宽     CentOS 7.3 64位 1核 2GB 1Mbps    以下我将详细记录我这次云主机的配置过程，一来是熟悉一下CentOS系统，二来是试用云主机。相信这次经历会让我学到很多东西。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-25T05:41:00.222Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】">
+<meta name="twitter:description" content="前言系统我选择了比较稳定的CentOS 7.3 64位。以下是一些关键参数信息：    操作系统 CPU 内存 带宽     CentOS 7.3 64位 1核 2GB 1Mbps    以下我将详细记录我这次云主机的配置过程，一来是熟悉一下CentOS系统，二来是试用云主机。相信这次经历会让我学到很多东西。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexoBlog/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wind-y.gitee.io/blog/2019/09/27/云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】/">
+
+
+
+
+
+  <title>云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】 | 不一样的烟火</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="bg_content">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexoBlog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不一样的烟火</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoBlog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+
+  
+
+
+
+
+
+</nav>
+
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wind-y.gitee.io/blog/hexoBlog/2019/09/27/云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jisoojun Yin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/hexoBlog/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不一样的烟火">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-27T14:22:21+08:00">
+                2019-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/hexoBlog/2019/09/27/云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】/" class="leancloud_visitors" data-flag-title="云主机配置微信公众号后台全记录 --【 阿里云ECS CentOS7 + Python3 + Flask + Nginx + Gunicorn + WeRoBot + Systemd 】">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>系统我选择了比较稳定的CentOS 7.3 64位。以下是一些关键参数信息：</p>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>CPU</th>
+<th>内存</th>
+<th>带宽</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CentOS 7.3 64位</td>
+<td>1核</td>
+<td>2GB</td>
+<td>1Mbps</td>
+</tr>
+</tbody>
+</table>
+<p>以下我将详细记录我这次云主机的配置过程，一来是熟悉一下CentOS系统，二来是试用云主机。相信这次经历会让我学到很多东西。</p>
+<a id="more"></a>
+<h2 id="阅读指南"><a href="#阅读指南" class="headerlink" title="阅读指南"></a>阅读指南</h2><h3 id="预备资源"><a href="#预备资源" class="headerlink" title="预备资源"></a>预备资源</h3><ol>
+<li>拥有一台CentOS系统的服务器或计算机</li>
+<li>良好的网络</li>
+<li>至少有一种已会使用的编辑器（本文中使用<code>vim</code>）</li>
+</ol>
+<h3 id="预备技能"><a href="#预备技能" class="headerlink" title="预备技能"></a>预备技能</h3><ol>
+<li>基本的Linux系统操作能力</li>
+<li>基本的Python3编程技能</li>
+<li>对“管理员权限”、“虚拟环境”、“包管理”、“网络代理”等概念有基本认识</li>
+</ol>
+<h1 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h1><h3 id="0-创建新用户"><a href="#0-创建新用户" class="headerlink" title="0. 创建新用户"></a>0. 创建新用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ adduser &lt;user_name&gt;                        # 创建新用户&lt;user_name&gt;</span><br><span class="line">$ passwd &lt;user_name&gt;                         # 设置新用户的密码</span><br><span class="line">$ usermod -aG wheel &lt;user_name&gt;              # 使&lt;user_name&gt;获得sudo权限</span><br><span class="line">$ su &lt;user_name&gt;                             # 切换至用户&lt;user_name&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>(1) “<code>&lt;user_name&gt;</code>”替换成你实际的项目名称；<br>(2) 你会发现，非<code>root</code>用户的主目录是<code>/home</code>的子目录。<br>(3) 设置密码的步骤<strong>是</strong>必须的。</p>
+<h3 id="1-更新包管理器yum及安装相关工具包"><a href="#1-更新包管理器yum及安装相关工具包" class="headerlink" title="1. 更新包管理器yum及安装相关工具包"></a>1. 更新包管理器<code>yum</code>及安装相关工具包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum update                            # 更新yum</span><br><span class="line">$ sudo yum install yum-utils                 # 安装yum-utils</span><br><span class="line">$ sudo yum groupinstall development          # 一并安装一系列常用包</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>(1) 由于是个人使用，在<code>root</code>账号下，以下的<code>sudo</code>命令其实都是不必需的；<br>(2) <code>yum</code>是类似于<code>Ubuntu</code>下<code>apt-get</code>般的存在；<br>(3) 尽管CentOS下shell的命令提示符为<code>#</code>，但为了此处不与Markdown的记号冲突，我会始终使用<code>$</code>。<br><strong>说明：此步骤无报错。每个命令运行成功输出内容均以“Complete!”结尾，中间遇到的确认一律yes(输入y)，当然你也可以选择对于每一个yum命令添加-y参数，就会一路yes自动安装下去了，下同。</strong></p>
+<h3 id="2-安装Python3"><a href="#2-安装Python3" class="headerlink" title="2. 安装Python3"></a>2. 安装Python3</h3><h5 id="2-1-基础安装"><a href="#2-1-基础安装" class="headerlink" title="2.1 基础安装"></a>2.1 基础安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install https://centos7.iuscommunity.org/ius-release.rpm  # 安装IUM repo</span><br><span class="line">$ sudo yum install python36u                 # 安装Python3.6</span><br><span class="line">$ sudo yum install python36u-pip             # 安装pip包管理</span><br><span class="line">$ sudo yum install python36u-devel           # 安装其他相关开发包</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>(1) 执行<code>python3.6 -V</code> 在2019.2.19的结果是Python 3.6.7；<br>(2) 此时如果使用<code>which python3</code>或<code>which pip3</code>均会报错，因为它们的实际名字分别是<code>python3.6</code>和<code>pip3.6</code>；<br>(3) 如果你是用其他方式安装的Python3，那么这里你可能会遇到文件冲突（尤其是当Python3的版本不一致的时候）；<br>(4) 不推荐源码编译安装（除非你是娴熟的老司机）。<br><strong>说明：此步骤无报错。</strong></p>
+<h5 id="2-2-软-链接python3和pip3"><a href="#2-2-软-链接python3和pip3" class="headerlink" title="2.2 (软)链接python3和pip3"></a>2.2 (软)链接<code>python3</code>和<code>pip3</code></h5><p>好了，对于在MacOS已经习惯使用<code>python3</code>和<code>pip3</code>这样的命令的我们来说，每次都要写<code>3.6</code>未免也太臃肿了（简单估算一下是要多28.6%的敲击频率），而且一些代码也需要额外做调整，费时费力。我们可以使用<code>ln</code>来创建(软)链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s /usr/bin/python3.6 /usr/bin/python3  # (软)链接python3</span><br><span class="line">$ ln -s /usr/bin/pip3.6 /usr/bin/pip3        # (软)链接pip3</span><br></pre></td></tr></table></figure>
+<p>这样我们就可以自由地使用<code>python3</code>和<code>pip3</code>了。<br><strong>注意：</strong><br>(1) 关于<code>ln</code>命令：在不同的目录，用到相同的文件时，不需要在每一个目录下都放一个必须相同的文件，只须在某个固定的目录，放上该文件，然后在其它的目录下用<code>ln</code>命令链接它就可以，不必重复地占用磁盘空间。这里只是把它用成类似<code>alias</code>的功能。<br>(2) 随手可以把<code>pip</code>更新到最新版本（不过这里其实不需要完成更新，因为在虚拟环境中如希望使用最新版本<code>pip</code>，需要在虚拟环境中更新）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install --upgrade pip                 # 将pip更新至最新</span><br></pre></td></tr></table></figure>
+<h3 id="3-创建虚拟环境"><a href="#3-创建虚拟环境" class="headerlink" title="3. 创建虚拟环境"></a>3. 创建虚拟环境</h3><p>创建虚拟环境的目的是保证业务独立，各依赖库版本控制不受其他项目影响。<br>Python3中内置了<code>venv</code>模块来创建虚拟环境。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir &lt;project_name&gt; &amp;&amp; cd &lt;project_name&gt;  # 创建并进入&lt;project_name&gt;目录</span><br><span class="line">$ python3 -m venv &lt;venv_name&gt;                # 创建名为&lt;venv_name&gt;的虚拟环境</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>(1) “<code>&lt;project_name&gt;</code>”替换成你实际的项目名称，“<code>&lt;venv_name&gt;</code>”替换成你实际的虚拟环境名称；<br>(2) 激活虚拟环境见4.2小节，（在激活状态下）退出虚拟环境使用命令<code>deactivate</code>；<br>(3) 有两种方案，第一种就是像这里给出的将虚拟环境相关文件的目录设在所需项目中（项目导向）；第二种你可以在主目录下创建目录<code>venvs</code>，然后将所有的虚拟目录创建在其下（文件管理导向）。<br>(4) 以下内容如无特别说明，执行的系统命令都在<code>~/&lt;project_name&gt;/</code>目录中。</p>
+<h3 id="4-搭建服务器"><a href="#4-搭建服务器" class="headerlink" title="4. 搭建服务器"></a>4. 搭建服务器</h3><h5 id="4-1-安装服务器配置所需的工具"><a href="#4-1-安装服务器配置所需的工具" class="headerlink" title="4.1 安装服务器配置所需的工具"></a>4.1 安装服务器配置所需的工具</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install gcc uwsgi nginx</span><br></pre></td></tr></table></figure>
+<h5 id="4-2-在虚拟环境中安装Python程序依赖的第三方库"><a href="#4-2-在虚拟环境中安装Python程序依赖的第三方库" class="headerlink" title="4.2 在虚拟环境中安装Python程序依赖的第三方库"></a>4.2 在虚拟环境中安装Python程序依赖的第三方库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/&lt;project_name&gt;/&lt;venv_name&gt;/bin/activate   # 激活虚拟环境&lt;venv_name&gt;</span><br><span class="line">$ pip3 install requests beautifulsoup4 lxml flask gunicorn werobot cryptography</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>(1) 以上Pypi安装的库中：<br><code>requests</code>，<code>beautifulsoup4</code>和<code>lxml</code>：爬虫业务相关（非必需），<br><code>flask</code>：所采用的Web框架（非必需），<br><code>gunicorn</code>：是一个高性能的Python WSGI UNIX HTTP服务器（必需），<br><code>werobot</code>：此处开发微信公众号的核心库（必需），<br><code>cryptography</code>：当你在微信后台基本配置选择的消息传输方式是“兼容模式”或“安全模式”时，WeRoBot所需要的密码库（推荐，非必需）。<br>(2) 似乎CentOS7系统自带了<code>nginx</code>，因为后来我<code>which nginx</code>得到的是<code>/usr/sbin/nginx</code>，而其他通过<code>yum</code>安装的命令工具都在<code>/usr/bin/</code>下。<br><strong>说明：此步骤无报错。cryptography库是我后来调试时根据异常信息后才知道要安装的。另外，假如你没有将pip更新到最新，会看到提示信息：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">You are using pip version 9.0.1, however version 19.0.2 is available.</span><br><span class="line">You should consider upgrading via the &apos;pip install --upgrade pip&apos; command.</span><br></pre></td></tr></table></figure>
+<p><strong>强迫症都会更新的。</strong></p>
+<h5 id="4-3-配置Nginx反向代理"><a href="#4-3-配置Nginx反向代理" class="headerlink" title="4.3 配置Nginx反向代理"></a>4.3 配置Nginx反向代理</h5><h6 id="4-3-1-创建项目的Nginx配置文件"><a href="#4-3-1-创建项目的Nginx配置文件" class="headerlink" title="4.3.1 创建项目的Nginx配置文件"></a>4.3.1 创建项目的Nginx配置文件</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/nginx/conf.d/&lt;project_name&gt;.conf   # 创建项目所需的nginx配置文件</span><br></pre></td></tr></table></figure>
+<p>在所打开的空文件中完成监听及反向代理的配置（没有注释的部分我也还不太懂，按照Flask官网教程写的），<code>:wq</code>保存关闭。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name &lt;我的ECS公网ip&gt;;               # 有域名的朋友这里填域名</span><br><span class="line"></span><br><span class="line">    access_log  /var/log/nginx/access.log;    # 设置正常通信日志</span><br><span class="line">    error_log  /var/log/nginx/error.log;      # 设置报错日志</span><br><span class="line"></span><br><span class="line">    location /&lt;project_name&gt;/ &#123;</span><br><span class="line">        proxy_pass         http://127.0.0.1:8000; # 反向代理Gunicorn本地的服务地址</span><br><span class="line">        proxy_redirect     off;</span><br><span class="line"></span><br><span class="line">        proxy_set_header   X-Real-IP           $remote_addr;</span><br><span class="line">        proxy_set_header   Host                $host;</span><br><span class="line">        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header   X-Forwarded-Proto   $scheme;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-3-2-启动Nginx服务"><a href="#4-3-2-启动Nginx服务" class="headerlink" title="4.3.2 启动Nginx服务"></a>4.3.2 启动Nginx服务</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start nginx</span><br><span class="line">$ sudo systemctl enable nginx</span><br></pre></td></tr></table></figure>
+<p>每当你修改任意的Nginx配置文件后，都需要重启<code>nginx</code>来使配置生效：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart nginx</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>(1) “<code>&lt;project_name&gt;</code>”替换成你实际的项目名称，“&lt;我的ECS公网ip&gt;”替换成你的公网ip或外部域名；<br>(2) 查看Nginx状态使用命令<code>sudo systemctl status nginx</code>；要停止Nginx服务，使用<code>sudo service nginx stop</code>。<br><strong>说明：这个地方卡了我很长的时间，由于是第一次部署服务器和第一次开发微信公众号，甚至定位问题出现在这里都费了很多工夫。特别要注意配置文件中server_name和location这里，参看Nginx: Server names，特别是当查看Nginx状态时遇到suspicious symbol的异常时。</strong><br>(3) [2019-05-20补充] 即使在<code>/etc/nginx/conf.d</code>中，也不要重复设置<code>server</code>，尤其是同一个ip，否则会造成地址冲突，导致服务启动失败。（这里的2条补充是由于我遇到了修改nginx后无法恢复公众号服务的问题）<br>(4) [2019-05-20补充] <code>sudo nginx -t</code>用来检查你的配置文件是否正确。每次更新nginx配置文件后，要在<code>restart</code>和<code>enable</code>前使配置重新加载<code>sudo nginx -s reload</code>。如果你做了以上这些仍然无法恢复你的项目，尝试去腾讯微信公众平台去<strong>“停用”</strong>并重新<strong>“启用”</strong>服务器配置。</p>
+<h5 id="4-4-部署一个”Hello-World-”的Flask-WeRoBot项目"><a href="#4-4-部署一个”Hello-World-”的Flask-WeRoBot项目" class="headerlink" title="4.4 部署一个”Hello World!”的Flask-WeRoBot项目"></a>4.4 部署一个”Hello World!”的Flask-WeRoBot项目</h5><h6 id="4-4-1-创建一个robot-py，用来管理你的机器人（自动回复程序）"><a href="#4-4-1-创建一个robot-py，用来管理你的机器人（自动回复程序）" class="headerlink" title="4.4.1 创建一个robot.py，用来管理你的机器人（自动回复程序）"></a>4.4.1 创建一个<code>robot.py</code>，用来管理你的机器人（自动回复程序）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from werobot import WeRoBot</span><br><span class="line"></span><br><span class="line">robot = WeRoBot(</span><br><span class="line">    token=&apos;&lt;我的令牌&gt;&apos;,  </span><br><span class="line">    encoding_aes_key=&apos;&lt;我的消息加解密密钥&gt;&apos;, </span><br><span class="line">    app_id=&apos;&lt;我的开发者ID&gt;&apos;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">@robot.handler</span><br><span class="line">def hello(message):</span><br><span class="line">    return &apos;Hello World!&apos;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><code>token</code>和<code>encoding_aes_key</code>务必与微信公众平台设置的“<strong>令牌(Token)</strong>”和“<strong>消息加解密密钥(EncodingAESKey)</strong>”保持一致（前者是自定义的，后者是提交服务器设置时微信那边随机生成的）<br><strong>说明：在WeRobot的官方文档和很多网上博客资料的“Hello World”中没有强调encoding_aes_key参数，因为他们默认在微信公众平台设置选择的是“明文模式”。</strong></p>
+<h6 id="4-4-2-创建一个app-py，作为主应用程序"><a href="#4-4-2-创建一个app-py，作为主应用程序" class="headerlink" title="4.4.2 创建一个app.py，作为主应用程序"></a>4.4.2 创建一个<code>app.py</code>，作为主应用程序</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from robot import robot</span><br><span class="line">from werobot.contrib.flask import make_view</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.add_url_rule(rule=&apos;/&lt;project_name&gt;/&apos;,        # WeRoBot挂载地址</span><br><span class="line">                 endpoint=&apos;werobot&apos;,             # Flask的endpoint</span><br><span class="line">                 view_func=make_view(robot),</span><br><span class="line">                 methods=[&apos;GET&apos;, &apos;POST&apos;])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><code>rule</code>参数的值结尾处的<code>/</code>必须有，因为要同Nginx配置信息以及微信设置的URL保持一致。</p>
+<h5 id="4-5-启动Gunicorn服务器"><a href="#4-5-启动Gunicorn服务器" class="headerlink" title="4.5 启动Gunicorn服务器"></a>4.5 启动Gunicorn服务器</h5><h6 id="4-5-1-尝试启动Gunicorn服务器"><a href="#4-5-1-尝试启动Gunicorn服务器" class="headerlink" title="4.5.1 尝试启动Gunicorn服务器"></a>4.5.1 尝试启动Gunicorn服务器</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 最简单的命令方式（默认绑定的是127.0.0.1:8000）</span><br><span class="line">$ gunicorn app:app</span><br><span class="line"># 或者设置一些参数的方式</span><br><span class="line">$ gunicorn -w 3 -b 127.0.0.1:8000 app:app</span><br></pre></td></tr></table></figure>
+<p>这时你的终端就会显示服务器的监听状态，类似于下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[2019-02-28 12:13:54 +0800] [16859] [INFO] Starting gunicorn 19.9.0</span><br><span class="line">[2019-02-28 12:13:54 +0800] [16859] [INFO] Listening at: http://127.0.0.1:8000 (16859)</span><br><span class="line">[2019-02-28 12:13:54 +0800] [16859] [INFO] Using worker: sync</span><br><span class="line">[2019-02-28 12:13:54 +0800] [16862] [INFO] Booting worker with pid: 16862</span><br><span class="line">[2019-02-28 12:13:54 +0800] [16863] [INFO] Booting worker with pid: 16863</span><br><span class="line">[2019-02-28 12:13:54 +0800] [16864] [INFO] Booting worker with pid: 16864</span><br></pre></td></tr></table></figure>
+<p>然后打开网页浏览器，输入url：<code>http://&lt;我的ECS公网ip&gt;/&lt;project_name&gt;/</code>，如果你看到一个中心标题为“这是一个WeRoBot应用”的页面而非“404”、“502”这种错误页面，说明你的服务器启动成功了（Nginx反代理也设置正确了）。退出<code>Control + c</code>。</p>
+<h6 id="4-5-2-创建WSGI入口文件"><a href="#4-5-2-创建WSGI入口文件" class="headerlink" title="4.5.2 创建WSGI入口文件"></a>4.5.2 创建WSGI入口文件</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim wsgi.py</span><br></pre></td></tr></table></figure>
+<p>文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from app import app</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+<p>这个文件存在的意义是业务逻辑分离。<br>现在启动Gunicorn服务器就变为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ gunicorn wsgi:app </span><br><span class="line"># 或</span><br><span class="line">$ gunicorn -w 3 -b 127.0.0.1:8000 wsgi:app</span><br></pre></td></tr></table></figure>
+<h3 id="5-完成微信公众平台设置"><a href="#5-完成微信公众平台设置" class="headerlink" title="5. 完成微信公众平台设置"></a>5. 完成微信公众平台设置</h3><p>这里默认你已经完成了微信公众号的申请。<br>登录微信公众平台后，在左侧下方找到 <strong>开发</strong> &gt;&gt; <strong>基本配置</strong> &gt;&gt; <strong>修改配置</strong>，然后填写服务器信息，根据本文的上下文约定，填写的内容应该符合这个格式：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td>http://&lt;我的ECS公网ip&gt;/&lt;project_name&gt;/</td>
+</tr>
+<tr>
+<td>Token</td>
+<td>&lt;我的令牌&gt;</td>
+</tr>
+<tr>
+<td>EncodingAESKey</td>
+<td>操作：选择随机生成</td>
+</tr>
+<tr>
+<td>消息加解密方式</td>
+<td>操作：选择安全(或明文/兼容)模式</td>
+</tr>
+</tbody>
+</table>
+<p>随后点击<strong>提交</strong>完成设置。<br><strong>注意：</strong>在点击<strong>提交</strong>前请确定服务器已启动。EncodingAESKey处的字符串对应上文中的“<strong>&lt;我的消息加解密密钥&gt;</strong>”</p>
+<h3 id="6-创建Systemd-Unit-File"><a href="#6-创建Systemd-Unit-File" class="headerlink" title="6. 创建Systemd Unit File"></a>6. 创建Systemd Unit File</h3><p>这个是为了在CentOS系统重启后自动启动我们的Gunicorn服务器以恢复Flask项目，同时在后台守护Gunicorn运行的进程（也就是说即使你登出后依然保持运行状态）。我们只需要创建相应的服务文件(<code>.service</code>)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/systemd/system/&lt;project_name&gt;.service</span><br></pre></td></tr></table></figure>
+<p>添加文件如下内容保存退出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Gunicorn instance to serve &lt;project_name&gt;</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=&lt;user_name&gt;</span><br><span class="line">Group=nginx</span><br><span class="line">WorkingDirectory=/home/&lt;user_name&gt;/&lt;project_name&gt;</span><br><span class="line">Environment=&quot;PATH=/home/&lt;user_name&gt;/&lt;project_name&gt;/&lt;venv_name&gt;/bin&quot;</span><br><span class="line">ExecStart=/home/&lt;user_name&gt;/&lt;project_name&gt;/&lt;venv_name&gt;/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 wsgi:app</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>接下来启动我们的<code>&lt;project_name&gt;</code>服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload             # 使服务文件生效</span><br><span class="line">$ sudo systemctl start &lt;project_name&gt;      # 启动&lt;project_name&gt;服务</span><br><span class="line">$ sudo systemctl enable &lt;project_name&gt;     # 使&lt;project_name&gt;服务可用</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>查看状态使用命令<code>sudo systemctl status &lt;project_name&gt;</code>；停止服务使用<code>sudo service &lt;project_name&gt; stop</code>。<br><strong>说明：我们这里不采用其他文档或资料中提到的守护程序Supervisor，因为CentOS7自带的systemd足够强大易用，省去了安装新工具的麻烦（也节省了空间）。</strong></p>
+<h3 id="7-测试"><a href="#7-测试" class="headerlink" title="7. 测试"></a>7. 测试</h3><p>进入公众号回复任意消息，如果一切顺利的话，你将收到文本消息“Hello World!”<br><strong>大功告成！</strong><br>后续就是移植旧功能，开发新功能，并且逐步迭代优化的过程了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>常言道，“生命在于折腾”，历经1周的探索尝试，包括到Github提issue寻求帮助，咨询阿里云的工程师，联系腾讯客服，搜索浏览上百个链接，终于成功将服务器跑起来，很开心！也完成了这篇记录，给自己留下一个见证，如果这篇文章能够帮助到你那就更好了！也请点个“喜欢”，让我知道探索技术的道路上并不孤独，也让我知道能帮你少走了弯路！完结撒花~</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://janikarhunen.fi/how-to-install-python-3-6-1-on-centos-7" target="_blank" rel="noopener">[1]How-to install Python 3.6.1 on CentOS 7</a><br><a href="https://dormousehole.readthedocs.io/en/latest/" target="_blank" rel="noopener">[2]Flask中文文档</a><br><a href="https://werobot.readthedocs.io/zh_CN/latest/" target="_blank" rel="noopener">[3] WeRoBot官方文档</a><br><a href="https://shanguangyu.com/articles/wechat-ECS/" target="_blank" rel="noopener">[4] 阿里云ECS搭建微信公众平台</a><br><a href="https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-centos-7" target="_blank" rel="noopener">[5] How To Serve Flask Applications with Gunicorn and Nginx on CentOS7</a><br><a href="https://bartsimons.me/gunicorn-as-a-systemd-service/" target="_blank" rel="noopener">[6] Gunicorn as a SystemD service</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的赞赏是我的动力，谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/hexoBlog/images/wechatpay.jpg" alt="Jisoojun Yin 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/hexoBlog/images/alipay.jpg" alt="Jisoojun Yin 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoBlog/tags/CentOS7/" rel="tag"># CentOS7</a>
+          
+            <a href="/hexoBlog/tags/Nginx/" rel="tag"># Nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoBlog/2019/06/20/hexo音乐播放器插件/" rel="next" title="hexo音乐播放器插件">
+                <i class="fa fa-chevron-left"></i> hexo音乐播放器插件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDcxMC8yMTIzNQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/hexoBlog/uploads/avatar.png" alt="Jisoojun Yin">
+            
+              <p class="site-author-name" itemprop="name">Jisoojun Yin</p>
+              <p class="site-description motion-element" itemprop="description">我就是我，一只小小鸟</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/hexoBlog/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/hexoBlog/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/hexoBlog/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jisoobaby" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jisoojun-yin@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://gitee.com/wind-y" target="_blank" title="码云">
+                      
+                        <i class="fa fa-fw fa-gitee.com"></i>码云</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阅读指南"><span class="nav-number">2.</span> <span class="nav-text">阅读指南</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预备资源"><span class="nav-number">2.1.</span> <span class="nav-text">预备资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预备技能"><span class="nav-number">2.2.</span> <span class="nav-text">预备技能</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#配置过程"><span class="nav-number"></span> <span class="nav-text">配置过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-创建新用户"><span class="nav-number">0.1.</span> <span class="nav-text">0. 创建新用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-更新包管理器yum及安装相关工具包"><span class="nav-number">0.2.</span> <span class="nav-text">1. 更新包管理器yum及安装相关工具包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装Python3"><span class="nav-number">0.3.</span> <span class="nav-text">2. 安装Python3</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-基础安装"><span class="nav-number">0.3.0.1.</span> <span class="nav-text">2.1 基础安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-软-链接python3和pip3"><span class="nav-number">0.3.0.2.</span> <span class="nav-text">2.2 (软)链接python3和pip3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-创建虚拟环境"><span class="nav-number">0.4.</span> <span class="nav-text">3. 创建虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-搭建服务器"><span class="nav-number">0.5.</span> <span class="nav-text">4. 搭建服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-安装服务器配置所需的工具"><span class="nav-number">0.5.0.1.</span> <span class="nav-text">4.1 安装服务器配置所需的工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-在虚拟环境中安装Python程序依赖的第三方库"><span class="nav-number">0.5.0.2.</span> <span class="nav-text">4.2 在虚拟环境中安装Python程序依赖的第三方库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-配置Nginx反向代理"><span class="nav-number">0.5.0.3.</span> <span class="nav-text">4.3 配置Nginx反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-1-创建项目的Nginx配置文件"><span class="nav-number">0.5.0.3.1.</span> <span class="nav-text">4.3.1 创建项目的Nginx配置文件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-2-启动Nginx服务"><span class="nav-number">0.5.0.3.2.</span> <span class="nav-text">4.3.2 启动Nginx服务</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-部署一个”Hello-World-”的Flask-WeRoBot项目"><span class="nav-number">0.5.0.4.</span> <span class="nav-text">4.4 部署一个”Hello World!”的Flask-WeRoBot项目</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-4-1-创建一个robot-py，用来管理你的机器人（自动回复程序）"><span class="nav-number">0.5.0.4.1.</span> <span class="nav-text">4.4.1 创建一个robot.py，用来管理你的机器人（自动回复程序）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-4-2-创建一个app-py，作为主应用程序"><span class="nav-number">0.5.0.4.2.</span> <span class="nav-text">4.4.2 创建一个app.py，作为主应用程序</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-5-启动Gunicorn服务器"><span class="nav-number">0.5.0.5.</span> <span class="nav-text">4.5 启动Gunicorn服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-5-1-尝试启动Gunicorn服务器"><span class="nav-number">0.5.0.5.1.</span> <span class="nav-text">4.5.1 尝试启动Gunicorn服务器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-5-2-创建WSGI入口文件"><span class="nav-number">0.5.0.5.2.</span> <span class="nav-text">4.5.2 创建WSGI入口文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-完成微信公众平台设置"><span class="nav-number">0.6.</span> <span class="nav-text">5. 完成微信公众平台设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-创建Systemd-Unit-File"><span class="nav-number">0.7.</span> <span class="nav-text">6. 创建Systemd Unit File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-测试"><span class="nav-number">0.8.</span> <span class="nav-text">7. 测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number"></span> <span class="nav-text">参考资料</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jisoojun Yin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="BbeiAn-info">
+    京ICP备 -
+    <a target="_blank" href="http://www.beian.miit.gov.cn/" style="color:#f0d784" rel="nofollow">19050870</a> <!--a标签中增加nofollow属性，避免爬虫出站。-->|
+  <!-- <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=你自己的备案号" style="color:#f0d784;text-decoration:none;padding-left:30px;background:url(https://s1.ax1x.com/2018/09/29/ilmwIH.png) no-repeat left center" rel="nofollow">赣公网安备 你自己的备案号</a>    这里将图标作为了背景，以使得能和后面的文字在同一行-->
+</div>
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/hexoBlog/js/src/fireworks.js"></script>
+    
+
+    <!-- 在线播放器
+    <link rel="stylesheet" href="/blog/dist/APlayer.min.css">
+    <div id="aplayer"></div>
+    <script type="text/javascript" src="/blog/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="/blog/dist/music.js"></script>
+    -->
+
+    <!-- 视频播放器  -->
+
+    <link rel="stylesheet" href="/hexoBlog/dist/DPlayer.min.css">
+    <div id="dplayer"></div>
+    <script type="text/javascript" src="/hexoBlog/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/hexoBlog/dist/music.js"></script>
+
+
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/hexoBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/hexoBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/hexoBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/hexoBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/hexoBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/hexoBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/hexoBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/hexoBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/hexoBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexoBlog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("KF2nsP9ptUYRMqS0auekoroo-gzGzoHsz", "SRKtnLYJno4Rb7AdBVhaXSTs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/hexoBlog/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/hexoBlog/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/hexoBlog/js/src/dynamic_bg.js"></script>
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/hexoBlog/js/src/clicklove.js"></script>
+
+</body>
+</html>
